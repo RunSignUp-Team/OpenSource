@@ -24,4 +24,9 @@ define('RESULTS_TEST2_RESULT_SET_ID', 123);
 define('RESULTS_TEST2_BATCH_SIZE', 25);	// Don't go too large here
 define('RESULTS_TEST2_SLEEP_TIME', 1);	// Sleep between calls
 
+// resultsApiTest3.php Settings
+define('RESULTS_TEST3_RACE_ID', 123);
+define('RESULTS_TEST3_EVENT_ID', 123);
+define('RESULTS_TEST3_RESULT_SET_ID', 123);
+
 ?>

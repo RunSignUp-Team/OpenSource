@@ -10,3 +10,7 @@ resultsApiTest2.php
 Shows examples of downloading participants from the API and using the
 registration id to post live results.  This setup does not require bib or chip
 numbers to be assigned in RunSignUp.
+
+resultsApiTest3.php
+--------------------------------------------------------------------------------
+Demonstrates recalculating the division placements for a result set.
