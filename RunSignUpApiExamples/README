@@ -1,0 +1,12 @@
+resultsApiTest1.php
+--------------------------------------------------------------------------------
+Shows examples of setting up a result set including race divisions and splits.
+Demonstrates posting live results matched by bib number.
+
+
+
+resultsApiTest2.php
+--------------------------------------------------------------------------------
+Shows examples of downloading participants from the API and using the
+registration id to post live results.  This setup does not require bib or chip
+numbers to be assigned in RunSignUp.
