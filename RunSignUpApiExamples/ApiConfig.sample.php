@@ -17,4 +17,11 @@ define('RESULTS_TEST1_NUM_PARTICIPANTS', 123);
 define('RESULTS_TEST1_BATCH_SIZE', 25);	// Don't go too large here
 define('RESULTS_TEST1_SLEEP_TIME', 1);	// Sleep between calls
 
+// resultsApiTest2.php Settings
+define('RESULTS_TEST2_RACE_ID', 123);
+define('RESULTS_TEST2_EVENT_ID', 123);
+define('RESULTS_TEST2_RESULT_SET_ID', 123);
+define('RESULTS_TEST2_BATCH_SIZE', 25);	// Don't go too large here
+define('RESULTS_TEST2_SLEEP_TIME', 1);	// Sleep between calls
+
 ?>

@@ -75,7 +75,7 @@ class RunSignupRestClient
 	*/
 	public function setReturnFormat($format)
 	{
-	  if (preg_match('/^XML|JSON$/iAD', $format))
+	  if (preg_match('/^XML|JSON|CSV$/iAD', $format))
 	  	$this->format = strtolower($format);
 	}
 
@@ -121,6 +121,8 @@ class RunSignupRestClient
 	  	curl_setopt($this->curl, CURLOPT_URL, $url);
 			curl_setopt($this->curl, CURLOPT_HEADER, 0);
 			curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
+			// For debugging
+			curl_setopt($this->curl, CURLINFO_HEADER_OUT, 1);
 			
 			// Determine HTTP method
 			if ($httpMethod == 'GET')
@@ -130,6 +132,16 @@ class RunSignupRestClient
 				curl_setopt($this->curl, CURLOPT_POST, 1);
 				curl_setopt($this->curl, CURLOPT_POSTFIELDS, $postParams);
 			}
+			// DELETE request
+			else if ($httpMethod == 'DELETE')
+			{
+				curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+				if (!empty($postParams))
+				{
+					curl_setopt($this->curl, CURLOPT_POST, 1);
+					curl_setopt($this->curl, CURLOPT_POSTFIELDS, $postParams);
+				}
+			}
 			/*
 			else if ($httpMethod == 'PUT')
 			{
@@ -138,9 +150,12 @@ class RunSignupRestClient
 				curl_setopt($this->curl, CURLOPT_INFILESIZE, );
 			}
 			*/
-
+			
 			// Make request
 			$data = curl_exec($this->curl);
+			
+			// Store header debugging info
+			$debugData['requestHeaders'] = curl_getinfo($this->curl, CURLINFO_HEADER_OUT);
 	  }
 	  // Use streams
 	  else
