@@ -56,7 +56,12 @@ else
 {
 	// Create new result set
 	$postParams['request_type'] = 'new-result-set';
-	$postParams['request'] = json_encode(array('individual_result_set_name' => 'Live Results Test'));
+	$postParams['request'] = json_encode(array(
+		'individual_result_set_name' => 'Live Results Test',
+		'public_results' => 'T',
+		'results_source_name' => 'RunSignUp.com',
+		'results_source_url' => 'https://runsignup.com',
+	));
 	$resp = $restClient->callMethod($urlPrefix . '/Results', 'POST', $getParams, $postParams, true);
 	if (!$resp)
 		die("Create result set request failed.\n".$restClient->lastRawResponse);
