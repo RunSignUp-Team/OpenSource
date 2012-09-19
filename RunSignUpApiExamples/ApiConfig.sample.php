@@ -7,6 +7,8 @@ define('PROTOCOL', 'https');
 // User info
 define('API_LOGIN_EMAIL', 'example@example.com');
 define('API_LOGIN_PASSWORD', 'password');
+define('TIMER_API_KEY', 'key');
+define('TIMER_API_SECRET', 'secret');
 
 // resultsApiTest1.php Settings
 define('RESULTS_TEST1_RACE_ID', 123);

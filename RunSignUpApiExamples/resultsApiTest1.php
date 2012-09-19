@@ -7,24 +7,39 @@
 // Get up some config
 require('ApiConfig.php');
 
-// Get password
-if (defined('API_LOGIN_PASSWORD') && API_LOGIN_PASSWORD)
-	$password = API_LOGIN_PASSWORD;
+require('RunSignupRestClient.class.php');
+
+// Check if there are timer settings
+$loggedIn = false;
+if (defined('TIMER_API_KEY') && TIMER_API_KEY && defined('TIMER_API_SECRET') && TIMER_API_SECRET)
+{
+	// Set up API
+	$restClient = new RunSignupRestClient(ENDPOINT, PROTOCOL, TIMER_API_KEY, TIMER_API_SECRET);
+}
 else
 {
-	echo "Password: ";
-	system('stty -echo');
-	$password = trim(fgets(STDIN));
-	system('stty echo');
-	// Add a new line since the user's newline didn't echo
-	echo "\n";
+	$loggedIn = true;
+	
+	// Get password
+	if (defined('API_LOGIN_PASSWORD') && API_LOGIN_PASSWORD)
+		$password = API_LOGIN_PASSWORD;
+	else
+	{
+		echo "Password: ";
+		system('stty -echo');
+		$password = trim(fgets(STDIN));
+		system('stty echo');
+		// Add a new line since the user's newline didn't echo
+		echo "\n";
+	}
+	
+	// Login to API
+	$restClient = new RunSignupRestClient(ENDPOINT, PROTOCOL, null, null);
+	if (!$restClient->login(API_LOGIN_EMAIL, $password))
+		die("Failed to login.\n");
 }
 
-// Login to API
-require('RunSignupRestClient.class.php');
-$restClient = new RunSignupRestClient(ENDPOINT, PROTOCOL, null, null);
-if (!$restClient->login(API_LOGIN_EMAIL, $password))
-	die("Failed to login.\n");
+// Set response format
 $restClient->setReturnFormat('json');
 
 // Set up URL prefix
@@ -302,6 +317,7 @@ for ($i = 0; $i < $bibMax; $i+=$batchSize)
 }
 
 // Logout
-$restClient->logout();
+if ($loggedIn)
+	$restClient->logout();
 
 ?>

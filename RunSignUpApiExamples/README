@@ -2,7 +2,7 @@ resultsApiTest1.php
 --------------------------------------------------------------------------------
 Shows examples of setting up a result set including race divisions and splits.
 Demonstrates posting live results matched by bib number.
-
+Includes logic for both timer access and user login.
 
 
 resultsApiTest2.php
