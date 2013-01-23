@@ -28,6 +28,11 @@ LoadTestingTest.class.php
 This is an abstract class that load tests should be based off of.  The derived
 class should use the LoadTestingSession object to simulate page requests.
 
+LoadTestingGoogle.class.php
+This is an example load test that simply loads the Google homepage, then
+performs a search for "RunSignUp". You can use this class for reference when
+writing your own load tests.
+
 testServerScripts
 This folder contains PHP files and bash scripts that will be run on the test
 server.  Some of the base classes above are copied by the load testing script.
