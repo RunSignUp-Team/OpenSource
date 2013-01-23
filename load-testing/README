@@ -1,0 +1,33 @@
+This folder contains pieces of code used to load test a website. Some files are
+complete files whereas others are just code snippets.
+
+ServerManager.class.php
+This file contains functions to manage servers in the infrastructure. Some
+portions of this file are specific to RunSignUp, such as getting the proper web
+server image or getting web server instances, but can be easily updated for
+other infrastructures. This file includes a method that starts new web servers,
+evenly distributing them across EC2 Azailability Zones. It also can start spot
+instances to serve as test servers.
+
+runLoadTest.php
+This is an example file that runs a load test. It runs in the background to
+start test servers, do initial setup, collect and report stats while the test is
+running, and clean up the test. This file will not run as-is. It contains a lot
+of RunSignUp specific code, but can be a good starting point for other
+applications. It starts test servers to run the test and has the basic flow of
+running a load test.
+
+LoadTestingPageResponse.class.php
+This file is used to parse HTML responses and provides utility functions.
+
+LoadTestingSession.class.php
+This file simulates a session on a web site.  It includes a utility function to
+simulate filling in form fields.
+
+LoadTestingTest.class.php
+This is an abstract class that load tests should be based off of.  The derived
+class should use the LoadTestingSession object to simulate page requests.
+
+testServerScripts
+This folder contains PHP files and bash scripts that will be run on the test
+server.  Some of the base classes above are copied by the load testing script.

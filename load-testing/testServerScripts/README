@@ -1,0 +1,21 @@
+analyzeAndStoreResults.php
+This file pushes log and output files from a load test to S3.  It then processes
+the files to generate stats that are returned to the server running the test.
+
+clearTestData.sh
+Clears output directories and stats before a new load test is run.
+
+registrationTest.php
+RunSignUp specific file that starts a single registration test from the command
+line. Other load tests can be based off of this file.
+
+registrationTestBuildStats.php
+Background process that listens for messages from each PHP load testing process
+to build real-time stats.
+
+setup.sh
+Sets up a server to run load tests by setting up an in-memory filesystem,
+installing software required for the test, and setting up linux parameters.
+
+startPhpTests.sh
+Generic bash script to start a PHP process for multiple load tests.
