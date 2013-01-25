@@ -1,0 +1,4 @@
+This PHP script is called by nagios when the state of a load balancer changes.
+If a load balancer is down, it moves the Elastic IP address and route tables to
+a running load balancer. It then periodically checks if the original load
+balancer has recovered.

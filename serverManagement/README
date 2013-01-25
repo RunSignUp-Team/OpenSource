@@ -1,0 +1,8 @@
+changeMemcachedInstanceTypes.php
+This script converts the instance type on running instance types.  It does so by
+having extra stopped EC2 instances.  The running and stopped instances are
+swapped.  Data is preserved on the session servers, but not the data servers.
+
+changeWebServerInstanceTypes.php
+This is a simple script to quickly do a mass change of instance types on all
+stopped web server instances.

@@ -1,0 +1,3 @@
+This is a custom PHP session handler that uses two pools of memcached servers to
+store sessions. It is redundant, preventing session lose in the event of some
+server failure.
