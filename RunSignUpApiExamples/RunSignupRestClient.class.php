@@ -31,6 +31,9 @@ class RunSignupRestClient
 	
 	/** Last raw response */
 	public $lastRawResponse = null;
+	
+	/** OAuth */
+	protected $oauth = null;
 
 	/**
   * Constructor
@@ -41,8 +44,9 @@ class RunSignupRestClient
   * @param string $apiSecret API secret
   * @param string $tmpKey Temporary API key
   * @param string $keySecret Temporary API secret
+  * @param OAuth $oauth OAuth client if logged into API
 	*/
-	public function __construct($urlBase, $protocol, $apiKey = null, $apiSecret = null, $tmpKey = null, $tmpSecret = null)
+	public function __construct($urlBase, $protocol, $apiKey = null, $apiSecret = null, $tmpKey = null, $tmpSecret = null, $oauth = null)
 	{
 		$this->urlBase = $urlBase;
 		$this->protocol = $protocol;
@@ -50,6 +54,7 @@ class RunSignupRestClient
 	  $this->apiSecret = $apiSecret;
 	  $this->tmpKey = $tmpKey;
 	  $this->tmpSecret = $tmpSecret;
+		$this->oauth = $oauth;
 
 	  // Check if CuRL is installed
 	  if (function_exists('curl_init'))
@@ -123,6 +128,12 @@ class RunSignupRestClient
 			curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
 			// For debugging
 			curl_setopt($this->curl, CURLINFO_HEADER_OUT, 1);
+			
+			// OAuth headers
+			$headers = array();
+			if ($this->oauth)
+				$headers[] = 'Authorization: ' . $this->oauth->getRequestHeader($httpMethod, $url, $postParams);
+			curl_setopt($this->curl, CURLOPT_HTTPHEADER, $headers);
 			
 			// Determine HTTP method
 			if ($httpMethod == 'GET')
@@ -209,9 +220,10 @@ class RunSignupRestClient
 	 * Login to get temporary credentials
 	 * @param string $email E-mail address
 	 * @param string $password Password
+	 * @param array &$user User information will be passed back here
 	 * @return bool True on successful login
 	 */
-	public function login($email, $password)
+	public function login($email, $password, &$user = null)
 	{
 		$oldFormat = $this->format;
 		$this->format = 'xml';
@@ -231,6 +243,9 @@ class RunSignupRestClient
 		// Check for error
 		if (isset($resp->error))
 			return false;
+		
+		// Set user info
+		$user = json_decode(json_encode((array)$resp->user), true);
 		
 		// Set keys
 		$this->tmpKey = (string)$resp->tmp_key;
@@ -264,6 +279,24 @@ class RunSignupRestClient
 		$this->tmpKey = $this->tmpSecret = null;
 		
 		return true;
+	}
+	
+	/**
+	 * Get temporary key
+	 * @return string tmp_key parameter
+	 */
+	public function getTmpKey()
+	{
+		return $this->tmpKey;
+	}
+	
+	/**
+	 * Get temporary secret
+	 * @return string tmp_secret parameter
+	 */
+	public function getTmpSecret()
+	{
+		return $this->tmpSecret;
 	}
 }
 
