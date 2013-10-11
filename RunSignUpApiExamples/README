@@ -18,3 +18,7 @@ Demonstrates recalculating the division placements for a result set.
 clubInfo.php
 --------------------------------------------------------------------------------
 Simple example of getting club information.
+
+clubInfo2.php
+--------------------------------------------------------------------------------
+Simple example of getting club information without using RunSignupRestClient.
