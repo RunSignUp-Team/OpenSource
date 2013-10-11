@@ -14,3 +14,7 @@ numbers to be assigned in RunSignUp.
 resultsApiTest3.php
 --------------------------------------------------------------------------------
 Demonstrates recalculating the division placements for a result set.
+
+clubInfo.php
+--------------------------------------------------------------------------------
+Simple example of getting club information.
