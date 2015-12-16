@@ -243,10 +243,6 @@ if (!empty($_POST))
 					You must complete your registration at RunSignUp.
 				</p>
 				
-				<div class="text-center">
-					<button type="button" class="requiresRunSignUpMessaging btn btn-large btn-primary" onclick="requestRunSignUpPopupClose();">Close this Popup</button>
-				</div>
-				
 			<?php else: ?>
 				<form method="post">
 					<div id="loading" class="progress progress-striped active">
@@ -299,26 +295,26 @@ if (!empty($_POST))
 /* RunSignUp Javascript Messaging Support */
 function isRunSignUpMessagingSupported()
 {
-	return (window.JSON && window.postMessage);
-}	
-	
-/** Request that the popup be closed */
-function requestRunSignUpPopupClose()
+	return !!(window.postMessage);
+}
+
+/* Send height */
+function sendRunSignUpHeight()
 {
-	// Check for support
 	if (isRunSignUpMessagingSupported())
 	{
-		var msg = {
-			'action': 'close'
-		};
-		parent.postMessage(JSON.stringify(msg), <?php echo json_encode($runSignUpBaseUrl); ?>);
+		height = $(document.body).height();
+		window.parent.postMessage('{"height": '+height+'}', "*");
 	}
 }
 
-// Remove buttons tha trequire messaging
+// Remove buttons that require messaging
 $(function() {
 	if (!isRunSignUpMessagingSupported())
 		$("button.requiresRunSignUpMessaging").remove();
+	
+	// Send height
+	sendRunSignUpHeight();
 });
 
 <?php if (!isset($jsonSuccessData)): ?>
@@ -408,6 +404,9 @@ $(function() {
 			
 			// Enable submit button
 			$("#submit").prop("disabled", false);
+			
+			// Update height
+			sendRunSignUpHeight();
 		}
 	}
 <?php endif; ?>
